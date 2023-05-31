@@ -25,7 +25,7 @@ const UsersPage = () => {
   //   getUsers()
   // }, [])
 
-  // Vanilla Redux
+  // Vanilla Redux + Redux - toolkit 1:55:16
   const dispatch = useDispatch()
   const { userData: usersList, loading: isLoading } = useSelector(
     getUsersStateSelector
