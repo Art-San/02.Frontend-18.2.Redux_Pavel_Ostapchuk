@@ -1,29 +1,59 @@
-import { createSlice } from '@reduxjs/toolkit'
+// redux_toolkit_createAsyncThunk
 
-// Init Redux-toolkit
+import { createSlice } from '@reduxjs/toolkit'
+import { featchUsersAsync } from './actions'
 const initialState = {
   userData: [],
   loading: false,
   error: null
 }
-
+// все асинхронные акшены должны быть сдесь
 export const UsersSlice = createSlice({
   name: 'Users',
   initialState,
-  reducers: {
-    fetchUsers(state) {
+  extraReducers: {
+    // все асинхронные акшены должны быть сдесь
+    [featchUsersAsync.pending.type]: (state) => {
       state.loading = true
     },
-    fetchUsersSuccess(state, { payload }) {
+    [featchUsersAsync.fulfilled.type]: (state, { payload }) => {
       state.loading = false
       state.userData = payload
     },
-    fetchUsersFailure(state, { payload }) {
+    [featchUsersAsync.rejected]: (state, { payload }) => {
       state.loading = false
       state.error = payload
     }
   }
 })
+
+//=====================================================
+// если синхроные акшены то так
+// Init Redux-toolkit
+// import { createSlice } from '@reduxjs/toolkit'
+// const initialState = {
+//   userData: [],
+//   loading: false,
+//   error: null
+// }
+
+// export const UsersSlice = createSlice({
+//   name: 'Users',
+//   initialState,
+//   reducers: { // если синхроные акшены то так
+//     fetchUsers(state) {
+//       state.loading = true
+//     },
+//     fetchUsersSuccess(state, { payload }) {
+//       state.loading = false
+//       state.userData = payload
+//     },
+//     fetchUsersFailure(state, { payload }) {
+//       state.loading = false
+//       state.error = payload
+//     }
+//   }
+// })
 
 // Init Vanilla Redux
 // import {

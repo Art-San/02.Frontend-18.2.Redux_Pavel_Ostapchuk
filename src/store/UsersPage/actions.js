@@ -1,17 +1,37 @@
-import { UsersSlice } from './reducer'
-import { UsersService } from './users-service'
-const { fetchUsers, fetchUsersSuccess, fetchUsersFailure } = UsersSlice.actions
+//=====================================================
+// redux_toolkit_createAsyncThunk
 
-export const featchUsersAsync = () => async (dispatch) => {
-  try {
-    dispatch(fetchUsers())
-    const { data } = await UsersService.getUsers()
-    dispatch(fetchUsersSuccess(data))
-  } catch (error) {
-    console.error(error)
-    dispatch(fetchUsersFailure('Ошибка!'))
+import { createAsyncThunk } from '@reduxjs/toolkit'
+import { UsersService } from './users-service'
+
+export const featchUsersAsync = createAsyncThunk(
+  'users/featchUsers',
+  async (_, thunkApi) => {
+    try {
+      const { data } = await UsersService.getUsers()
+      return data
+    } catch (error) {
+      console.error(error)
+      return thunkApi.rejectWithValue('Ошибка')
+    }
   }
-}
+)
+//=====================================================
+// Init Redux-toolkit
+// import { UsersSlice } from './reducer'
+// import { UsersService } from './users-service'
+// const { fetchUsers, fetchUsersSuccess, fetchUsersFailure } = UsersSlice.actions
+
+// export const featchUsersAsync = () => async (dispatch) => {
+//   try {
+//     dispatch(fetchUsers())
+//     const { data } = await UsersService.getUsers()
+//     dispatch(fetchUsersSuccess(data))
+//   } catch (error) {
+//     console.error(error)
+//     dispatch(fetchUsersFailure('Ошибка!'))
+//   }
+// }
 
 //=====================================================
 // Init Vanilla Redux
